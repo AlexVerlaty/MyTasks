@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy policy — MyTasks.AI</title>
+<meta name="description" content="What MyTasks.AI reads, what it stores, where it stores it, and how to revoke access.">
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --muted: #5c5c5c;
+    --rule: #e3e3e3;
+    --accent: #2b6cb0;
+    --card: #f7f7f8;
+    --code-bg: #f0f0f2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161a;
+      --fg: #e8e8ea;
+      --muted: #a0a4ac;
+      --rule: #2a2e35;
+      --accent: #7ab0e8;
+      --card: #1c1f25;
+      --code-bg: #22262d;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 46rem; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
+  header { border-bottom: 1px solid var(--rule); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  h1 { font-size: 1.8rem; line-height: 1.25; margin: 0 0 .4rem; }
+  .updated { color: var(--muted); margin: 0; font-size: .9rem; }
+  h2 { font-size: 1.2rem; margin: 2.5rem 0 .6rem; }
+  a { color: var(--accent); }
+  code, .scope {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: .875em;
+    background: var(--code-bg);
+    padding: .1em .35em;
+    border-radius: 3px;
+    overflow-wrap: anywhere;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .95rem; }
+  .scroller { overflow-x: auto; }
+  th, td { text-align: left; padding: .6rem .5rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-weight: 600; color: var(--muted); font-size: .85rem; text-transform: uppercase; letter-spacing: .03em; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+  }
+  .card p:first-child { margin-top: 0; }
+  .card p:last-child { margin-bottom: 0; }
+  ul { padding-left: 1.25rem; }
+  li { margin: .35rem 0; }
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    color: var(--muted);
+    font-size: .9rem;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Privacy policy</h1>
+  <p class="updated">MyTasks.AI &middot; last updated 14 August 2026 &middot;
+  <a href="index.html">back to the homepage</a></p>
+</header>
+
+<p>MyTasks.AI is a Telegram bot used by one household by invitation. It has no public
+sign-up, no server of its own, and no business model. This policy describes every piece of
+data it touches.</p>
+
+<h2>Who runs it</h2>
+
+<p>The bot is operated by an individual, not a company, and runs on that person&rsquo;s home
+computer. Contact:
+<a href="mailto:vetryli@gmail.com">vetryli@gmail.com</a>.</p>
+
+<h2>What Google data it accesses</h2>
+
+<p>Only after the member grants access on Google&rsquo;s own consent screen, and only within
+these scopes:</p>
+
+<div class="scroller">
+<table>
+  <thead>
+    <tr><th>Scope</th><th>What it is used for</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="scope">calendar.events</span></td>
+      <td>Reading the member&rsquo;s events to answer &laquo;what&rsquo;s on today&raquo;, and
+      creating, rescheduling, editing or cancelling events they ask for.</td>
+    </tr>
+    <tr>
+      <td><span class="scope">calendar.calendars.readonly</span></td>
+      <td>Reading a calendar&rsquo;s title and time zone, so times are written in the right
+      zone.</td>
+    </tr>
+    <tr>
+      <td><span class="scope">calendar.calendarlist.readonly</span></td>
+      <td>Listing which calendars the member is subscribed to, so a day can be read across all
+      of them and a calendar can be found by name.</td>
+    </tr>
+    <tr>
+      <td><span class="scope">tasks</span></td>
+      <td>Reading, adding, completing and removing items in the member&rsquo;s Google Tasks
+      lists.</td>
+    </tr>
+    <tr>
+      <td><span class="scope">drive.file</span></td>
+      <td>Creating and editing the one spreadsheet the bot itself creates for members who keep
+      lists in Google Sheets, and granting a second household member access to it when asked.
+      This scope cannot reach any other file in the member&rsquo;s Drive.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>The bot does not request access to Gmail, Google Photos, Contacts, or Drive files it did
+not create.</p>
+
+<h2>Google Keep</h2>
+
+<p>Google Keep has no public API. A member who chooses to keep their lists in Keep supplies
+the bot with a credential obtained from their own Google session; the bot uses it to read and
+write only that member&rsquo;s Keep notes and lists. The credential is encrypted on the
+operator&rsquo;s computer under a key held outside the file, exactly as the Google OAuth
+tokens are, and is removed by <code>/unlink</code>.</p>
+
+<p>This access is established outside Google&rsquo;s OAuth consent screen and is not covered
+by the scopes above. A member who prefers not to use it can keep their lists in Google Tasks,
+Google Sheets or Notion instead, all of which use documented APIs.</p>
+
+<h2>What it stores, and where</h2>
+
+<p>Everything below lives on the operator&rsquo;s home computer. There is no cloud database
+and no third-party host.</p>
+
+<ul>
+  <li><strong>Access tokens</strong> for the Google accounts that have been linked, encrypted
+  at rest. These are what allow the bot to act after the member has consented.</li>
+  <li><strong>A roster</strong>: for each member, their Telegram user ID, username and display
+  name, the Google address they linked, and their settings &mdash; which service holds their
+  lists, which list is the default, whether they receive notifications.</li>
+  <li><strong>An undo journal</strong>: for a short period after each change, enough
+  information to reverse it &mdash; which list, which item, what it was before. This is what
+  makes the &laquo;undo&raquo; button work.</li>
+  <li><strong>Logs</strong> on the same computer, for diagnosing failures. They record what
+  the bot did and which errors occurred.</li>
+</ul>
+
+<div class="card">
+  <p><strong>List and calendar content is not stored.</strong> It is read from Google when a
+  message needs it and discarded once the reply is sent. The bot is a way to reach your data,
+  not a copy of it.</p>
+</div>
+
+<h2>What is sent where</h2>
+
+<ul>
+  <li><strong>To Google</strong> &mdash; the changes you asked for, and nothing else.</li>
+  <li><strong>To Telegram</strong> &mdash; the bot&rsquo;s replies, which necessarily contain
+  the list or calendar content you asked to see. Telegram&rsquo;s own privacy policy governs
+  messages in transit and at rest on their servers.</li>
+  <li><strong>To Anthropic</strong> &mdash; to work out what a message means, the text of that
+  message is sent to Claude together with the titles of the member&rsquo;s lists. The body of
+  a list, the contents of a calendar and any credential are <em>not</em> sent. Voice messages
+  are transcribed locally, on the operator&rsquo;s computer, and never leave it as audio.</li>
+</ul>
+
+<p>Nothing is sold, rented, or shared with advertisers or analytics providers. There are no
+advertisements, no tracking and no profiling. The bot is not used to train any model.</p>
+
+<h2>Limited Use</h2>
+
+<p>MyTasks.AI&rsquo;s use and transfer of information received from Google APIs adheres to the
+<a href="https://developers.google.com/terms/api-services-user-data-policy">Google API
+Services User Data Policy</a>, including the Limited Use requirements. Data obtained through
+Google APIs is used only to provide the features described on the
+<a href="index.html">homepage</a>, is not transferred to others except as necessary to provide
+those features, is not used for advertising, and is not read by humans except with the
+member&rsquo;s explicit permission, for security purposes, or as required by law.</p>
+
+<h2>How to revoke access</h2>
+
+<ul>
+  <li><strong>In the bot:</strong> <code>/unlink</code> for Google Keep,
+  <code>/unlinkcal</code> for Calendar, <code>/unlinktasks</code> for Tasks,
+  <code>/unlinksheets</code> for Sheets, or <code>/logout</code> for all of them at once. The
+  stored credential is deleted from disk.</li>
+  <li><strong>In your Google account:</strong>
+  <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>
+  &rarr; remove MyTasks.AI. This works regardless of the bot&rsquo;s state and takes effect
+  immediately.</li>
+  <li><strong>To be removed entirely,</strong> ask the owner to remove you from the household,
+  or write to the address below. Your roster entry and journal rows are deleted.</li>
+</ul>
+
+<p>Revoking access does not delete anything from your Google account: lists and events the bot
+created remain yours and stay where they are.</p>
+
+<h2>Retention</h2>
+
+<p>Credentials are kept until revoked. Roster entries are kept while the person is a member.
+Undo-journal rows and logs are kept only as long as they are useful for reversing a recent
+change or diagnosing a recent failure, and are not archived.</p>
+
+<h2>Children</h2>
+
+<p>The bot is not directed at children and is not offered to the public. Membership is granted
+individually by the owner.</p>
+
+<h2>Changes</h2>
+
+<p>If this policy changes, the date at the top changes with it. Because the bot has three
+users who all know the operator personally, material changes are also told to them directly.</p>
+
+<footer>
+  <p><a href="index.html">Homepage</a> &middot;
+  <a href="mailto:vetryli@gmail.com">vetryli@gmail.com</a></p>
+</footer>
+
+</div>
+</body>
+</html>

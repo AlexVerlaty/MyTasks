@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MyTasks.AI — shared lists and calendar for a household</title>
+<meta name="description" content="A private Telegram bot that keeps a household's shopping lists and calendar in the members' own Google accounts.">
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --muted: #5c5c5c;
+    --rule: #e3e3e3;
+    --accent: #2b6cb0;
+    --card: #f7f7f8;
+    --code-bg: #f0f0f2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161a;
+      --fg: #e8e8ea;
+      --muted: #a0a4ac;
+      --rule: #2a2e35;
+      --accent: #7ab0e8;
+      --card: #1c1f25;
+      --code-bg: #22262d;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 46rem; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
+  header { border-bottom: 1px solid var(--rule); padding-bottom: 2rem; margin-bottom: 2.5rem; }
+  h1 { font-size: 1.9rem; line-height: 1.25; margin: 0 0 .5rem; }
+  .tagline { color: var(--muted); font-size: 1.05rem; margin: 0; }
+  h2 { font-size: 1.25rem; margin: 2.75rem 0 .75rem; }
+  h3 { font-size: 1rem; margin: 1.75rem 0 .4rem; }
+  p, li { color: var(--fg); }
+  a { color: var(--accent); }
+  code, .scope {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: .875em;
+    background: var(--code-bg);
+    padding: .1em .35em;
+    border-radius: 3px;
+    overflow-wrap: anywhere;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .95rem; }
+  .scroller { overflow-x: auto; }
+  th, td { text-align: left; padding: .6rem .5rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-weight: 600; color: var(--muted); font-size: .85rem; text-transform: uppercase; letter-spacing: .03em; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+  }
+  .card p:first-child { margin-top: 0; }
+  .card p:last-child { margin-bottom: 0; }
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    color: var(--muted);
+    font-size: .9rem;
+  }
+  ul { padding-left: 1.25rem; }
+  li { margin: .3rem 0; }
+  .lang { color: var(--muted); font-size: .95rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>MyTasks.AI</h1>
+  <p class="tagline">A private Telegram bot that keeps one household&rsquo;s shopping lists,
+  to-do lists and calendar &mdash; stored in the members&rsquo; own Google accounts, never in
+  the bot.</p>
+</header>
+
+<h2>What it is</h2>
+
+<p>MyTasks.AI is a Telegram bot used by a single family. Members write to it in ordinary
+Russian &mdash; typed or as voice messages &mdash; and it edits the shared lists and calendar
+they already keep in Google. There is no separate app to install and no account to create:
+the bot is a different way to reach data that already belongs to the people using it.</p>
+
+<p>Access is <strong>by invitation from the owner only</strong>. There is no public sign-up.
+Someone who finds the bot and presses Start is placed in a queue for the owner to approve or
+decline.</p>
+
+<h2>What it does</h2>
+
+<ul>
+  <li><strong>Lists.</strong> &laquo;Buy milk and bread&raquo; adds items; &laquo;got the
+  milk&raquo; ticks them off; &laquo;what&rsquo;s left for the cottage&raquo; reads the list
+  back. Lists live in the member&rsquo;s choice of Google Keep, Google Tasks, Google Sheets or
+  Notion.</li>
+  <li><strong>Calendar.</strong> &laquo;Put a meeting with mum on Saturday at 2&raquo; creates
+  an event; &laquo;what&rsquo;s on today&raquo; reads the day across every calendar the person
+  can see.</li>
+  <li><strong>Sharing.</strong> One member can grant another access to a list, after a
+  confirmation that names the list, the person and the email Google will send.</li>
+  <li><strong>Voice.</strong> Voice messages are transcribed on the owner&rsquo;s own computer
+  and shown as text before anything is acted on.</li>
+</ul>
+
+<h2>What it asks Google for, and why</h2>
+
+<p>The bot requests the narrowest scope that can do the job. Where a read-only scope would
+work, the read-only scope is what it asks for.</p>
+
+<div class="scroller">
+<table>
+  <thead>
+    <tr><th>Scope</th><th>Why it is needed</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="scope">calendar.events</span></td>
+      <td>Creating, rescheduling and cancelling events is the point of the calendar half of
+      the bot. <span class="scope">calendar.events.readonly</span> would leave it able to
+      answer &laquo;what&rsquo;s on today&raquo; and unable to do anything a person asks for.</td>
+    </tr>
+    <tr>
+      <td><span class="scope">calendar.calendars.readonly</span></td>
+      <td>Reads a calendar&rsquo;s title and time zone. The time zone is not cosmetic: without
+      it &laquo;at 2pm&raquo; is written in whatever zone the server happens to run in, and the
+      mistake stays invisible until an appointment is missed.</td>
+    </tr>
+    <tr>
+      <td><span class="scope">calendar.calendarlist.readonly</span></td>
+      <td>Lists which calendars the person is subscribed to, so &laquo;what&rsquo;s on
+      today&raquo; can answer from all of them rather than from the primary one alone, and so
+      &laquo;put it in the family calendar&raquo; can find the calendar by name.</td>
+    </tr>
+    <tr>
+      <td><span class="scope">tasks</span></td>
+      <td>Google Tasks is one of the four places a member may choose to keep their lists.
+      Adding and completing items is the whole feature, so
+      <span class="scope">tasks.readonly</span> does not cover it.</td>
+    </tr>
+    <tr>
+      <td><span class="scope">drive.file</span></td>
+      <td>For members who keep lists in Google Sheets. This scope grants access
+      <em>only to files the bot itself created</em> &mdash; it cannot see anything else in the
+      person&rsquo;s Drive. It is used in preference to
+      <span class="scope">spreadsheets</span>, which would grant access to every spreadsheet
+      the person owns.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="card">
+  <p><strong>What it never asks for.</strong> No access to Gmail, Photos, Contacts, or to
+  Drive files the bot did not create. No scope is requested &laquo;in advance&raquo; for a
+  feature that does not exist yet.</p>
+</div>
+
+<h2>Where the data goes</h2>
+
+<p>Nowhere except Google and Telegram. There is no MyTasks.AI server, no database of user
+content, and no analytics. The bot runs on the owner&rsquo;s home computer; credentials are
+encrypted on that computer&rsquo;s disk; list and calendar content is read from Google when a
+message arrives and is not kept afterwards.</p>
+
+<p>The full account is in the <a href="privacy.html">privacy policy</a>, including what is
+stored, for how long, and how to revoke access.</p>
+
+<h2 lang="ru">Коротко по-русски</h2>
+
+<p class="lang" lang="ru">MyTasks.AI &mdash; телеграм-бот для одной семьи. Он ведёт общие списки
+покупок и семейный календарь, которые лежат в ваших собственных Google-аккаунтах, а не у
+бота. Понимает обычную речь и голосовые. Вход только по приглашению владельца. Бот работает
+на домашнем компьютере, свои серверы отсутствуют, данные никуда, кроме Google и Telegram, не
+уходят. Подробности &mdash; в <a href="privacy.html">политике конфиденциальности</a>.</p>
+
+<footer>
+  <p><a href="privacy.html">Privacy policy</a></p>
+  <p>Contact: <a href="mailto:vetryli@gmail.com">vetryli@gmail.com</a></p>
+</footer>
+
+</div>
+</body>
+</html>
