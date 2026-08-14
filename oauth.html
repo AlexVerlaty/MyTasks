@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Подключение аккаунта — MyTasks.AI</title>
+<link rel="icon" type="image/png" sizes="50x50" href="icon-50.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --muted: #5c5c5c;
+    --rule: #e3e3e3;
+    --accent: #2b6cb0;
+    --card: #f7f7f8;
+    --code-bg: #f0f0f2;
+    --ok: #1f7a3d;
+    --warn: #a33;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161a;
+      --fg: #e8e8ea;
+      --muted: #a0a4ac;
+      --rule: #2a2e35;
+      --accent: #7ab0e8;
+      --card: #1c1f25;
+      --code-bg: #22262d;
+      --ok: #5cc98a;
+      --warn: #e88;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 34rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+  h1 { font-size: 1.4rem; margin: 0 0 .35rem; }
+  .sub { color: var(--muted); margin: 0 0 1.75rem; }
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 0 0 1.5rem; }
+  .steps li {
+    counter-increment: s;
+    position: relative;
+    padding-left: 2rem;
+    margin: .55rem 0;
+  }
+  .steps li::before {
+    content: counter(s);
+    position: absolute; left: 0; top: .1rem;
+    width: 1.4rem; height: 1.4rem;
+    background: var(--accent); color: #fff;
+    border-radius: 50%;
+    font-size: .8rem; font-weight: 600;
+    display: grid; place-items: center;
+  }
+  #value {
+    display: block;
+    width: 100%;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .8rem;
+    line-height: 1.45;
+    background: var(--code-bg);
+    color: var(--fg);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: .8rem;
+    min-height: 6.5rem;
+    resize: vertical;
+    word-break: break-all;
+  }
+  button {
+    font: inherit;
+    font-weight: 600;
+    width: 100%;
+    margin-top: .75rem;
+    padding: .85rem 1rem;
+    border: 0;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+  }
+  button:active { transform: translateY(1px); }
+  .note {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: .85rem 1rem;
+    margin: 1.5rem 0 0;
+    font-size: .9rem;
+    color: var(--muted);
+  }
+  .status { min-height: 1.4rem; font-size: .9rem; margin: .5rem 0 0; }
+  .ok { color: var(--ok); font-weight: 600; }
+  .bad { color: var(--warn); font-weight: 600; }
+  footer { margin-top: 2.5rem; font-size: .85rem; color: var(--muted); }
+  a { color: var(--accent); }
+  .hide { display: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1 id="head">Почти готово</h1>
+<p class="sub" id="sub">Google подтвердил доступ. Осталось перенести ответ в бота.</p>
+
+<div id="good">
+  <ol class="steps">
+    <li>Нажми «Скопировать».</li>
+    <li>Открой чат с ботом.</li>
+    <li>Вставь и отправь — бот сам всё поймёт и сотрёт сообщение.</li>
+  </ol>
+
+  <textarea id="value" readonly spellcheck="false" aria-label="Ответ для бота"></textarea>
+  <button id="copy" type="button">Скопировать</button>
+  <p class="status" id="status"></p>
+
+  <div class="note">
+    <p style="margin:.2rem 0"><strong>Никому больше это не отправляй.</strong> Строка
+    одноразовая и живёт несколько минут, но до тех пор она — ключ к твоему подключению.</p>
+    <p style="margin:.6rem 0 .2rem">Страница ничего не сохраняет и никуда не отправляет:
+    она только показывает то, что уже написано в адресной строке. Ни серверов, ни счётчиков,
+    ни аналитики.</p>
+  </div>
+</div>
+
+<div id="bad" class="hide">
+  <p id="badtext"></p>
+  <div class="note">
+    <p style="margin:.2rem 0">Начни заново: отправь боту <code>/linkcal</code> (или
+    <code>/linktasks</code>, <code>/linksheets</code>) и пройди по новой ссылке.</p>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html">MyTasks.AI</a> &middot;
+  <a href="privacy.html">Политика конфиденциальности</a>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var code = params.get("code");
+  var error = params.get("error");
+
+  var good = document.getElementById("good");
+  var bad = document.getElementById("bad");
+
+  function fail(head, sub, detail) {
+    document.getElementById("head").textContent = head;
+    document.getElementById("sub").textContent = sub;
+    document.getElementById("badtext").textContent = detail;
+    good.classList.add("hide");
+    bad.classList.remove("hide");
+  }
+
+  if (error) {
+    // «Отмена» on the consent screen lands here too, and it is not a malfunction — saying
+    // «ошибка» about a deliberate choice sends somebody looking for a problem that does
+    // not exist.
+    fail(
+      error === "access_denied" ? "Доступ не выдан" : "Google вернул ошибку",
+      error === "access_denied"
+        ? "Ты нажал «Отмена» — или сняли галочку с нужного разрешения."
+        : "Подключение не завершилось.",
+      "Google сообщил: " + error
+    );
+    return;
+  }
+
+  if (!code) {
+    // Somebody opened the page directly. Not an error either — just nothing to do.
+    fail(
+      "Здесь пусто",
+      "Эта страница что-то показывает только после экрана разрешений Google.",
+      "Открывать её вручную незачем."
+    );
+    return;
+  }
+
+  // The WHOLE address, not the code alone. The bot verifies `state` from it — that check is
+  // the only defence this path has against a code arriving from somewhere else, and a bare
+  // code cannot be checked at all.
+  var box = document.getElementById("value");
+  box.value = window.location.href;
+
+  var status = document.getElementById("status");
+  document.getElementById("copy").addEventListener("click", function () {
+    function done() {
+      status.textContent = "Скопировано. Теперь вставь это в чат с ботом.";
+      status.className = "status ok";
+    }
+    function manual() {
+      // Clipboard access is refused in more situations than it is granted — an old
+      // browser, an insecure context, a permission prompt somebody dismissed. Selecting
+      // the text still works everywhere, so the fallback is a working instruction rather
+      // than an apology.
+      box.focus();
+      box.select();
+      status.textContent = "Скопируй выделенное вручную — долгое нажатие → «Копировать».";
+      status.className = "status bad";
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(box.value).then(done, manual);
+    } else {
+      manual();
+    }
+  });
+})();
+</script>
+</body>
+</html>

@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MyTasks.AI — shared lists and calendar for a household</title>
 <meta name="description" content="A private Telegram bot that keeps a household's shopping lists and calendar in the members' own Google accounts.">
+<link rel="icon" type="image/png" sizes="50x50" href="icon-50.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
 <style>
   :root {
     --bg: #ffffff;
@@ -72,16 +75,33 @@
   ul { padding-left: 1.25rem; }
   li { margin: .3rem 0; }
   .lang { color: var(--muted); font-size: .95rem; }
+  .brand { display: flex; align-items: center; gap: .9rem; margin-bottom: .6rem; }
+  .brand img { width: 56px; height: 56px; border-radius: 12px; flex: none; }
+  .brand h1 { margin: 0; }
+  .botlink {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: .6rem 1.1rem;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    background: var(--card);
+    text-decoration: none;
+    font-weight: 600;
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
 
 <header>
-  <h1>MyTasks.AI</h1>
+  <div class="brand">
+    <img src="icon.png" alt="" width="56" height="56">
+    <h1>MyTasks.AI</h1>
+  </div>
   <p class="tagline">A private Telegram bot that keeps one household&rsquo;s shopping lists,
   to-do lists and calendar &mdash; stored in the members&rsquo; own Google accounts, never in
   the bot.</p>
+  <a class="botlink" href="https://t.me/ai_mytasks_bot">Open @ai_mytasks_bot in Telegram</a>
 </header>
 
 <h2>What it is</h2>
@@ -166,10 +186,9 @@ work, the read-only scope is what it asks for.</p>
 
 <h2>Where the data goes</h2>
 
-<p>Nowhere except Google and Telegram. There is no MyTasks.AI server, no database of user
-content, and no analytics. The bot runs on the owner&rsquo;s home computer; credentials are
-encrypted on that computer&rsquo;s disk; list and calendar content is read from Google when a
-message arrives and is not kept afterwards.</p>
+<p>Nowhere except Google and Telegram. There is no database of user content and no
+analytics. Credentials are encrypted at rest; list and calendar content is read from Google
+when a message arrives and is not kept afterwards.</p>
 
 <p>The full account is in the <a href="privacy.html">privacy policy</a>, including what is
 stored, for how long, and how to revoke access.</p>
@@ -178,12 +197,13 @@ stored, for how long, and how to revoke access.</p>
 
 <p class="lang" lang="ru">MyTasks.AI &mdash; телеграм-бот для одной семьи. Он ведёт общие списки
 покупок и семейный календарь, которые лежат в ваших собственных Google-аккаунтах, а не у
-бота. Понимает обычную речь и голосовые. Вход только по приглашению владельца. Бот работает
-на домашнем компьютере, свои серверы отсутствуют, данные никуда, кроме Google и Telegram, не
-уходят. Подробности &mdash; в <a href="privacy.html">политике конфиденциальности</a>.</p>
+бота. Понимает обычную речь и голосовые. Вход только по приглашению владельца. Данные никуда,
+кроме Google и Telegram, не уходят. Подробности &mdash; в
+<a href="privacy.html">политике конфиденциальности</a>.</p>
 
 <footer>
-  <p><a href="privacy.html">Privacy policy</a></p>
+  <p><a href="https://t.me/ai_mytasks_bot">@ai_mytasks_bot</a> &middot;
+  <a href="privacy.html">Privacy policy</a></p>
   <p>Contact: <a href="mailto:vetryli@gmail.com">vetryli@gmail.com</a></p>
 </footer>
 

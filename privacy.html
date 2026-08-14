@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy policy — MyTasks.AI</title>
 <meta name="description" content="What MyTasks.AI reads, what it stores, where it stores it, and how to revoke access.">
+<link rel="icon" type="image/png" sizes="50x50" href="icon-50.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
 <style>
   :root {
     --bg: #ffffff;
@@ -81,14 +84,14 @@
 </header>
 
 <p>MyTasks.AI is a Telegram bot used by one household by invitation. It has no public
-sign-up, no server of its own, and no business model. This policy describes every piece of
-data it touches.</p>
+sign-up and no business model. This policy describes every piece of data it touches.</p>
 
 <h2>Who runs it</h2>
 
-<p>The bot is operated by an individual, not a company, and runs on that person&rsquo;s home
-computer. Contact:
-<a href="mailto:vetryli@gmail.com">vetryli@gmail.com</a>.</p>
+<p>The bot is operated by an individual, not a company. Contact:
+<a href="mailto:vetryli@gmail.com">vetryli@gmail.com</a>. The bot itself is
+<a href="https://t.me/ai_mytasks_bot">@ai_mytasks_bot</a> on Telegram, and it answers only
+to members the operator has admitted.</p>
 
 <h2>What Google data it accesses</h2>
 
@@ -139,8 +142,8 @@ not create.</p>
 <p>Google Keep has no public API. A member who chooses to keep their lists in Keep supplies
 the bot with a credential obtained from their own Google session; the bot uses it to read and
 write only that member&rsquo;s Keep notes and lists. The credential is encrypted on the
-operator&rsquo;s computer under a key held outside the file, exactly as the Google OAuth
-tokens are, and is removed by <code>/unlink</code>.</p>
+operator&rsquo;s side under a key held outside the file, exactly as the Google OAuth tokens
+are, and is removed by <code>/unlink</code>.</p>
 
 <p>This access is established outside Google&rsquo;s OAuth consent screen and is not covered
 by the scopes above. A member who prefers not to use it can keep their lists in Google Tasks,
@@ -148,8 +151,8 @@ Google Sheets or Notion instead, all of which use documented APIs.</p>
 
 <h2>What it stores, and where</h2>
 
-<p>Everything below lives on the operator&rsquo;s home computer. There is no cloud database
-and no third-party host.</p>
+<p>Everything below lives on equipment the operator controls. There is no cloud database and
+no third-party host.</p>
 
 <ul>
   <li><strong>Access tokens</strong> for the Google accounts that have been linked, encrypted
@@ -160,8 +163,8 @@ and no third-party host.</p>
   <li><strong>An undo journal</strong>: for a short period after each change, enough
   information to reverse it &mdash; which list, which item, what it was before. This is what
   makes the &laquo;undo&raquo; button work.</li>
-  <li><strong>Logs</strong> on the same computer, for diagnosing failures. They record what
-  the bot did and which errors occurred.</li>
+  <li><strong>Logs</strong>, in the same place, for diagnosing failures. They record what the
+  bot did and which errors occurred.</li>
 </ul>
 
 <div class="card">
@@ -180,7 +183,7 @@ and no third-party host.</p>
   <li><strong>To Anthropic</strong> &mdash; to work out what a message means, the text of that
   message is sent to Claude together with the titles of the member&rsquo;s lists. The body of
   a list, the contents of a calendar and any credential are <em>not</em> sent. Voice messages
-  are transcribed locally, on the operator&rsquo;s computer, and never leave it as audio.</li>
+  are transcribed locally and never leave that machine as audio.</li>
 </ul>
 
 <p>Nothing is sold, rented, or shared with advertisers or analytics providers. There are no
