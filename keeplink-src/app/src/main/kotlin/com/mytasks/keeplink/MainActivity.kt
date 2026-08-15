@@ -10,6 +10,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -24,11 +25,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.darkColorScheme
@@ -43,6 +46,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -64,6 +68,20 @@ import java.net.URLEncoder
 // the person to copy. It is never written to disk, never logged, never sent anywhere but
 // Google. Forked from github.com/Villoh/goopdl-auth (MIT); the protocol call is unchanged.
 private const val EMBEDDED_SETUP_URL = "https://accounts.google.com/EmbeddedSetup"
+
+/**
+ * The same page with the address already filled in. Confirmed working by hand on
+ * 15.08.2026: `EmbeddedSetup?Email=someone@gmail.com` opens straight at the password step.
+ *
+ * Capital `Email`, because Google's is. The lowercase spelling is ignored silently, which
+ * is the worst kind of wrong — the page still loads, just without the address, and it looks
+ * exactly like the parameter is not supported.
+ */
+private fun embeddedSetupUrl(email: String): String {
+    val trimmed = email.trim()
+    if (!trimmed.contains("@")) return EMBEDDED_SETUP_URL
+    return "$EMBEDDED_SETUP_URL?Email=" + URLEncoder.encode(trimmed, "UTF-8")
+}
 private const val AUTH_URL = "https://android.clients.google.com/auth"
 private const val POLL_TIMEOUT_MS = 300_000L
 private const val POLL_INTERVAL_MS = 700L
@@ -95,6 +113,9 @@ class MainActivity : ComponentActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // mytaskskeep://link?email=… — see the manifest. Empty whenever the app was opened
+        // from its own icon, which is most of the time and is not a failure.
+        val hinted = intent?.data?.getQueryParameter("email").orEmpty()
         setContent {
             MyTasksTheme {
                 Surface(
@@ -102,17 +123,24 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background,
                 ) {
                     var screen by remember { mutableStateOf<Screen>(Screen.Onboarding) }
+                    var email by remember { mutableStateOf(hinted) }
                     when (val current = screen) {
                         is Screen.Onboarding -> {
                             OnboardingScreen(
+                                email = email,
+                                onEmailChange = { email = it },
                                 onStart = { screen = Screen.SigningIn },
                             )
                         }
 
                         is Screen.SigningIn -> {
                             SignInScreen(
-                                onSuccess = { email, token -> screen = Screen.Success(email, token) },
+                                hint = email,
+                                onSuccess = { signedIn, token ->
+                                    screen = Screen.Success(signedIn, token)
+                                },
                                 onFailure = { message -> screen = Screen.Failure(message) },
+                                onBack = { screen = Screen.Onboarding },
                             )
                         }
 
@@ -160,7 +188,11 @@ private fun MyTasksTheme(content: @Composable () -> Unit) {
 }
 
 @Composable
-private fun OnboardingScreen(onStart: () -> Unit) {
+private fun OnboardingScreen(
+    email: String,
+    onEmailChange: (String) -> Unit,
+    onStart: () -> Unit,
+) {
     var visible by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) { visible = true }
 
@@ -205,7 +237,21 @@ private fun OnboardingScreen(onStart: () -> Unit) {
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
         )
         androidx.compose.foundation.layout
-            .Spacer(Modifier.size(32.dp))
+            .Spacer(Modifier.size(24.dp))
+        // Editable even when the deep link filled it in: the address the bot knows is the
+        // one somebody linked Calendar with, and it is not always the one holding their
+        // Keep. Prefilling is a shortcut, never a decision made on their behalf.
+        OutlinedTextField(
+            value = email,
+            onValueChange = onEmailChange,
+            singleLine = true,
+            label = { Text("Адрес Google (необязательно)") },
+            supportingText = { Text("Впишешь — вход откроется сразу на пароле") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+            modifier = Modifier.fillMaxWidth(),
+        )
+        androidx.compose.foundation.layout
+            .Spacer(Modifier.size(24.dp))
         Button(onClick = onStart, modifier = Modifier.fillMaxWidth()) {
             Text("Войти в Google")
         }
@@ -214,8 +260,10 @@ private fun OnboardingScreen(onStart: () -> Unit) {
 
 @Composable
 private fun SignInScreen(
+    hint: String,
     onSuccess: (String, String) -> Unit,
     onFailure: (String) -> Unit,
+    onBack: () -> Unit,
 ) {
     val context = LocalContext.current
     val webView =
@@ -232,9 +280,18 @@ private fun SignInScreen(
                 webViewClient = WebViewClient()
                 CookieManager.getInstance().setAcceptCookie(true)
                 CookieManager.getInstance().setAcceptThirdPartyCookies(this, true)
-                loadUrl(EMBEDDED_SETUP_URL)
+                loadUrl(embeddedSetupUrl(hint))
             }
         }
+
+    // Back went straight out of the app — there was no handler at all, so Android's default
+    // finished the activity. Inside a sign-in that is a trap: mistyping the address, or
+    // needing «Try another way» on the 2-Step screen, meant starting the whole thing over
+    // from the launcher. Back belongs to the WebView while it has history, and only then to
+    // the app.
+    BackHandler {
+        if (webView.canGoBack()) webView.goBack() else onBack()
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
@@ -336,6 +393,9 @@ private fun FailureScreen(
     message: String,
     onRetry: () -> Unit,
 ) {
+    // The same trap as on the sign-in screen: back on a failure should return to the start,
+    // not close the app somebody is trying to use.
+    BackHandler(onBack = onRetry)
     Column(
         modifier =
             Modifier

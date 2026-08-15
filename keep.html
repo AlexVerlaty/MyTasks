@@ -125,7 +125,29 @@
   0,8&nbsp;МБ &middot; только Android</p>
   <p class="meta">SHA-256 — чтобы проверить, что файл не подменили:</p>
   <span class="hash">225eab27827df4a4d89c74c7d8f65c00564b41f4e72d205ed5eb7bb933725fb2</span>
+  <!--
+    Появляется только когда бот открыл эту страницу с ?email=… и только после установки:
+    ссылка со схемой mytaskskeep:// никуда не ведёт, пока приложения нет.
+
+    Схема, а не https-ссылка на эту же страницу: Android App Links требуют
+    /.well-known/assetlinks.json в КОРНЕ домена, а сайт живёт в подкаталоге
+    alexverlaty.github.io/MyTasks/, корень которого принадлежит GitHub. Та же стена, в
+    которую упёрлась верификация экрана согласия Google.
+  -->
+  <p class="meta" id="handoff" hidden>После установки: <a id="open-app" href="#">открыть
+  приложение с адресом <strong id="handoff-email"></strong></a></p>
 </div>
+
+<script>
+  (function () {
+    var email = new URLSearchParams(location.search).get('email');
+    if (!email || email.indexOf('@') < 0) return;
+    document.getElementById('handoff-email').textContent = email;
+    document.getElementById('open-app').href =
+      'mytaskskeep://link?email=' + encodeURIComponent(email);
+    document.getElementById('handoff').hidden = false;
+  })();
+</script>
 
 <h2>Зачем оно нужно</h2>
 

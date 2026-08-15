@@ -18,6 +18,27 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!--
+              mytaskskeep://link?email=… — how the address a person already typed to the bot
+              reaches this app, so they do not type it a third time.
+
+              A custom scheme rather than an Android App Link on the https page, and that is
+              forced rather than chosen: an App Link needs /.well-known/assetlinks.json at the
+              ROOT of the domain, and the site lives at alexverlaty.github.io/MyTasks/ — a
+              subdirectory of a domain whose root belongs to GitHub. The same wall the Google
+              consent-screen verification ran into on 15.08.2026.
+
+              A custom scheme is only openable once the app is installed, so it can never be
+              the only way in: the onboarding screen keeps an editable field, and this fills
+              it in when it happens to be available.
+            -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="mytaskskeep" android:host="link" />
+            </intent-filter>
         </activity>
     </application>
 </manifest>
