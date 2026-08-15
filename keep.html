@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Подключить Google Keep с телефона — MyTasks.AI</title>
+<meta name="description" content="Крошечное Android-приложение, которое помогает подключить Google Keep к боту MyTasks прямо с телефона, без компьютера.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" sizes="50x50" href="icon-50.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --muted: #5c5c5c;
+    --rule: #e3e3e3;
+    --accent: #2b6cb0;
+    --card: #f7f7f8;
+    --code-bg: #f0f0f2;
+    --warn-bg: #fff7ed;
+    --warn-rule: #f0c088;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161a;
+      --fg: #e8e8ea;
+      --muted: #a0a4ac;
+      --rule: #2a2e35;
+      --accent: #7ab0e8;
+      --card: #1c1f25;
+      --code-bg: #22262d;
+      --warn-bg: #2a1f12;
+      --warn-rule: #6b4a1f;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 46rem; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
+  header { border-bottom: 1px solid var(--rule); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  h1 { font-size: 1.7rem; line-height: 1.25; margin: 0; }
+  .tagline { color: var(--muted); font-size: 1.05rem; margin: .6rem 0 0; }
+  h2 { font-size: 1.2rem; margin: 2.5rem 0 .6rem; }
+  p, li { color: var(--fg); }
+  a { color: var(--accent); }
+  code {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: .875em;
+    background: var(--code-bg);
+    padding: .1em .35em;
+    border-radius: 3px;
+    overflow-wrap: anywhere;
+  }
+  .hash {
+    display: block;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: .8rem;
+    background: var(--code-bg);
+    padding: .55rem .7rem;
+    border-radius: 6px;
+    margin: .4rem 0 0;
+    overflow-wrap: anywhere;
+    word-break: break-all;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+  }
+  .card p:first-child { margin-top: 0; }
+  .card p:last-child { margin-bottom: 0; }
+  .warn {
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-rule);
+  }
+  .brand { display: flex; align-items: center; gap: .9rem; margin-bottom: .3rem; }
+  .brand img { width: 52px; height: 52px; border-radius: 12px; flex: none; }
+  .download {
+    display: inline-block;
+    margin: .4rem 0 .2rem;
+    padding: .8rem 1.5rem;
+    border: none;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+  .meta { color: var(--muted); font-size: .9rem; margin: .5rem 0 0; }
+  ul, ol { padding-left: 1.3rem; }
+  li { margin: .35rem 0; }
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    color: var(--muted);
+    font-size: .9rem;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="brand">
+    <img src="icon.png" alt="" width="52" height="52">
+    <h1>Подключить Google&nbsp;Keep с&nbsp;телефона</h1>
+  </div>
+  <p class="tagline">Крошечное Android-приложение с одной задачей: подключить ваш Google&nbsp;Keep
+  к боту <strong>MyTasks</strong> прямо с телефона — без компьютера и без «инструментов
+  разработчика».</p>
+</header>
+
+<div class="card">
+  <a class="download" href="mytasks-keeplink.apk" download>Скачать приложение (.apk)</a>
+  <p class="meta">Файл <code>mytasks-keeplink.apk</code> &middot; 5,8&nbsp;МБ &middot; только Android</p>
+  <p class="meta">SHA-256 — чтобы проверить, что файл не подменили:</p>
+  <span class="hash">766836bd06eef446b4523b2151e2ff45f28582fce024380f0a03d59cf30e91f5</span>
+</div>
+
+<h2>Зачем оно нужно</h2>
+
+<p>У Google&nbsp;Keep, в отличие от Календаря и Google&nbsp;Tasks, нет обычного способа дать
+боту доступ через кнопку «Разрешить» на странице Google. Ключ к Keep можно взять только из
+вашей собственной сессии входа — а браузер отдаёт его лишь настоящему приложению, не
+веб-странице. Поэтому и нужно маленькое приложение: оно открывает вход Google, забирает ключ и
+показывает его вам, чтобы вы переслали его боту.</p>
+
+<h2>Как подключить</h2>
+
+<ol>
+  <li>Скачайте и откройте <code>mytasks-keeplink.apk</code>. Android спросит разрешение
+  установить приложение из этого источника — разрешите.</li>
+  <li>Откройте приложение, нажмите «Войти в Google». Пароль вы вводите
+  <strong>только на странице Google</strong>, внутри приложения.</li>
+  <li>Приложение покажет длинную строку-ключ и кнопку «Скопировать». Скопируйте её.</li>
+  <li>Отправьте ключ боту <a href="https://t.me/ai_mytasks_bot">@ai_mytasks_bot</a> в личный
+  чат. Бот подключит Keep и <strong>сразу удалит ваше сообщение</strong> с ключом.</li>
+  <li>Готово. Приложение больше не нужно — его можно удалить.</li>
+</ol>
+
+<h2>Почему это безопасно ровно настолько, насколько сказано</h2>
+
+<ul>
+  <li><strong>Две сетевые точки, обе — Google</strong>, и никаких других:
+  <code>accounts.google.com</code> (вход) и <code>android.clients.google.com</code> (обмен
+  ключа). Приложение никуда больше не ходит.</li>
+  <li><strong>Ключ никуда не отправляется приложением.</strong> Он только показывается на
+  экране и по вашему нажатию кладётся в буфер обмена. На диск не пишется, в лог не пишется,
+  аналитики нет.</li>
+  <li><strong>Одно разрешение — доступ в интернет.</strong> Ни контактов, ни файлов, ни
+  фоновой работы, ни уведомлений.</li>
+  <li><strong>Исходный код открыт.</strong> Это форк проекта
+  <a href="https://github.com/Villoh/goopdl-auth">goopdl-auth</a> (лицензия MIT); вся логика —
+  один файл примерно на 300 строк.</li>
+</ul>
+
+<div class="card warn">
+  <p><strong>Честно про границу.</strong> Ключ, который вы получите, — постоянный и открывает
+  весь ваш Google-аккаунт, а не только Keep. Такой уж он у Google для Keep. Поэтому
+  отправляйте эту строку <strong>только боту MyTasks</strong> и никому больше. Отозвать доступ
+  в любой момент можно командой <code>/unlink</code> в боте или на странице
+  <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</p>
+</div>
+
+<div class="card">
+  <p><strong>На iPhone не работает.</strong> Safari не отдаёт приложениям нужную часть входа,
+  поэтому способа подключить Keep с айфона нет — только с компьютера. На iPhone можно вместо
+  Keep выбрать Google&nbsp;Tasks, Google&nbsp;Таблицы или Notion: они подключаются кнопкой
+  «Разрешить» прямо в боте, приложение для этого не нужно.</p>
+</div>
+
+<h2>Не хотите ставить приложение?</h2>
+
+<p>Keep — не единственный вариант. Списки можно держать в <strong>Google&nbsp;Tasks</strong>,
+<strong>Google&nbsp;Таблицах</strong> или <strong>Notion</strong> — все три подключаются прямо
+в боте обычной кнопкой согласия Google, без всякого APK. Выбрать бэкенд можно командой
+<code>/backend</code>.</p>
+
+<footer>
+  <p><a href="index.html">О боте</a> &middot;
+  <a href="privacy.html">Политика конфиденциальности</a> &middot;
+  <a href="https://t.me/ai_mytasks_bot">@ai_mytasks_bot</a></p>
+  <p>Вопросы: <a href="mailto:vetryli@gmail.com">vetryli@gmail.com</a></p>
+</footer>
+
+</div>
+</body>
+</html>
