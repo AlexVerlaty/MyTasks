@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>MyTasksKeepLink</AssemblyName>
+    <RootNamespace>MyTasks.KeepLink</RootNamespace>
+    <Version>1.0.0</Version>
+    <Product>MyTasks · вход в Keep</Product>
+    <AssemblyTitle>MyTasks · вход в Keep</AssemblyTitle>
+    <Company>MyTasks</Company>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+
+    <!-- One file the person can double-click. Framework-dependent on purpose: a
+         self-contained build is ~70 MB and, worse, PyInstaller-shaped single files are
+         what antivirus heuristics flag hardest. .NET 8 Desktop Runtime ships with
+         Windows Update on Win10/11, and WebView2 Evergreen is preinstalled on Win11. -->
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>false</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <DebugType>none</DebugType>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <!-- The NuGet package ships .xml API docs; they would land beside the exe and make
+         «скачай один файл» a lie. -->
+    <PublishDocumentationFiles>false</PublishDocumentationFiles>
+    <PublishReferencesDocumentationFiles>false</PublishReferencesDocumentationFiles>
+    <AllowedReferenceRelatedFileExtensions>none</AllowedReferenceRelatedFileExtensions>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2903.40" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Embedded, not copied beside the exe: PublishSingleFile bundles assemblies but not
+         content, so a loose logo.png would simply be missing from the download. The whole
+         promise is «one file you double-click». -->
+    <EmbeddedResource Include="logo.png" LogicalName="logo.png" />
+    <EmbeddedResource Include="app.ico" LogicalName="app.ico" />
+  </ItemGroup>
+
+</Project>
