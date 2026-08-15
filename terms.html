@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terms of service — MyTasks.AI</title>
+<meta name="description" content="The terms MyTasks.AI is offered under: who runs it, what it promises, what it does not, and how to leave.">
+<link rel="icon" type="image/png" sizes="50x50" href="icon-50.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --muted: #5c5c5c;
+    --rule: #e3e3e3;
+    --accent: #2b6cb0;
+    --card: #f7f7f8;
+    --code-bg: #f0f0f2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161a;
+      --fg: #e8e8ea;
+      --muted: #a0a4ac;
+      --rule: #2a2e35;
+      --accent: #7ab0e8;
+      --card: #1c1f25;
+      --code-bg: #22262d;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 46rem; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
+  header { border-bottom: 1px solid var(--rule); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  h1 { font-size: 1.8rem; line-height: 1.25; margin: 0 0 .4rem; }
+  .updated { color: var(--muted); margin: 0; font-size: .9rem; }
+  h2 { font-size: 1.2rem; margin: 2.5rem 0 .6rem; }
+  a { color: var(--accent); }
+  code {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    font-size: .875em;
+    background: var(--code-bg);
+    padding: .1em .35em;
+    border-radius: 3px;
+    overflow-wrap: anywhere;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+  }
+  .card p:first-child { margin-top: 0; }
+  .card p:last-child { margin-bottom: 0; }
+  ul { padding-left: 1.25rem; }
+  li { margin: .35rem 0; }
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    color: var(--muted);
+    font-size: .9rem;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Terms of service</h1>
+  <p class="updated">MyTasks.AI &middot; last updated 15 August 2026 &middot;
+  <a href="index.html">back to the homepage</a></p>
+</header>
+
+<p>MyTasks.AI is a Telegram bot that keeps shared lists and a calendar for one household.
+These terms say what it is offered as, and what it is not. They are short because the
+arrangement is small: there is no company, no fee and no public sign-up.</p>
+
+<h2>Who offers it</h2>
+
+<p>The bot is run by an individual, not a business. Contact:
+<a href="mailto:vetryli@gmail.com">vetryli@gmail.com</a>. The bot is
+<a href="https://t.me/ai_mytasks_bot">@ai_mytasks_bot</a> on Telegram.</p>
+
+<h2>Who may use it</h2>
+
+<p>Membership is by invitation. The operator admits each member individually, and there is no
+way to join without being admitted. Using the bot means accepting these terms and the
+<a href="privacy.html">privacy policy</a>; if you do not accept them, do not link an account.</p>
+
+<p>Accounts you link are your own. Do not link an account you are not entitled to use, and do
+not use the bot to reach another person&rsquo;s data without their knowledge.</p>
+
+<h2>What it does with your accounts</h2>
+
+<p>Only what you ask it to, within the scopes you granted on Google&rsquo;s own consent screen.
+The <a href="privacy.html">privacy policy</a> lists every scope and what each one is used for,
+and it is the authoritative description &mdash; these terms do not add to it.</p>
+
+<p>Two things are worth naming here as well, because they reach outside your own account:</p>
+
+<ul>
+  <li><strong>Sharing a spreadsheet</strong> grants another person write access to it and Google
+  emails them. The bot asks for a confirmation naming the address before it does this, and it
+  cannot recall the letter afterwards.</li>
+  <li><strong>Inviting guests to an event</strong> makes Google send them an invitation the
+  moment the event is written. The bot shows every address on the confirmation card first, for
+  the same reason.</li>
+</ul>
+
+<h2>What it does not promise</h2>
+
+<div class="card">
+  <p>The bot runs on a home machine. It is offered <strong>as is</strong>, with no warranty and
+  no guarantee of availability, correctness or timeliness. It can be offline, it can
+  misunderstand a sentence, and it can be switched off permanently without notice.</p>
+</div>
+
+<p>Do not rely on it as the only record of anything that matters. Your lists and events live in
+your Google or Notion account, not in the bot, and they remain there whatever happens to it
+&mdash; that is deliberate, and it is the safeguard this paragraph rests on.</p>
+
+<p>To the extent the law allows, the operator is not liable for any loss arising from use of
+the bot, including a missed appointment, a deleted item or an unavailable service. Nothing here
+limits liability that cannot lawfully be limited.</p>
+
+<h2>Natural language and voice</h2>
+
+<p>Messages are interpreted by a language model, and voice messages are transcribed
+automatically. Both can be wrong. Anything that changes or deletes data is shown for
+confirmation before it happens, and recent changes can be undone from the bot &mdash; but the
+responsibility for checking what you confirmed is yours.</p>
+
+<h2>Leaving</h2>
+
+<ul>
+  <li><code>/unlink</code>, <code>/unlinkcal</code>, <code>/unlinktasks</code>,
+  <code>/unlinksheets</code> or <code>/logout</code> remove the stored credentials.</li>
+  <li><a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>
+  revokes access from Google&rsquo;s side, whatever state the bot is in.</li>
+  <li>Ask the operator to remove you from the household, and your roster entry goes with it.</li>
+</ul>
+
+<p>The operator may end anyone&rsquo;s access at any time. Nothing is deleted from your Google
+or Notion account when access ends: what the bot created stays yours and stays where it is.</p>
+
+<h2>Google API compliance</h2>
+
+<p>MyTasks.AI&rsquo;s use and transfer of information received from Google APIs adheres to the
+<a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services
+User Data Policy</a>, including the Limited Use requirements.</p>
+
+<h2>Changes</h2>
+
+<p>If these terms change, the date at the top changes with them. Because the bot has a handful
+of users who all know the operator personally, material changes are also told to them
+directly.</p>
+
+<footer>
+  <p><a href="index.html">Homepage</a> &middot;
+  <a href="privacy.html">Privacy policy</a> &middot;
+  <a href="mailto:vetryli@gmail.com">vetryli@gmail.com</a></p>
+</footer>
+
+</div>
+</body>
+</html>
