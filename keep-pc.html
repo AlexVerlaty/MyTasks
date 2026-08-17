@@ -128,9 +128,27 @@
 </header>
 
 <div class="card">
-  <a class="download" href="mytasks-keeplink.exe" download>Скачать программу (.exe)</a>
+  <!--
+    Раздача из Releases, а не файлом рядом со страницей. Chrome ругался на скачивание
+    («подозрительный файл») ещё до того, как человек доходил до окна Windows: это Google
+    Safe Browsing, отдельный от SmartScreen привратник, и он считает репутацию в том числе
+    по тому, откуда файл. У github.com/…/releases/download/… она несопоставима с
+    произвольным файлом в подкаталоге github.io.
+
+    Атрибут `download` убран намеренно: на чужом домене браузеры его игнорируют, и
+    оставлять его — обещать поведение, которого не будет.
+
+    Файл тот же самый, хеш прежний. Пересборка обнулила бы репутацию и в SmartScreen,
+    и здесь.
+  -->
+  <a class="download"
+     href="https://github.com/AlexVerlaty/MyTasks/releases/download/keeplink-pc-v1.0.0/mytasks-keeplink.exe">Скачать
+  программу (.exe)</a>
   <p class="meta">Файл <code>mytasks-keeplink.exe</code> &middot; версия 1.0.0 &middot;
   1,3&nbsp;МБ &middot; Windows 10 и 11</p>
+  <p class="meta">Скачивание идёт с
+  <a href="https://github.com/AlexVerlaty/MyTasks/releases/tag/keeplink-pc-v1.0.0">страницы
+  релиза на GitHub</a> — там же, где лежат исходники.</p>
   <p class="meta">SHA-256 — чтобы проверить, что файл не подменили:</p>
   <span class="hash">f2459c07257a611ab53cd7d6dcab05742892977270c2b87b914ba007917715a2</span>
 </div>
